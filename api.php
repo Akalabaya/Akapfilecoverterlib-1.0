@@ -33,8 +33,15 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 // Submit the POST request
 $result = curl_exec($ch);
 $output = json_decode($result,true);
-header("location:".$output['Files'][0]['Url']);
+$count = count($output['Files']);
+$i =0;
+while($i<$count){
+?>
+<iframe src="<?php echo $output['Files'][$i]['Url']; ?>" style="display:none;"></iframe>
+<?php
+$i++;
+}
 // Close cURL session handle
-curl_close($ch);
+if(curl_close($ch)){header("location:".$_GET['redirecturi']);}
 
 ?>
